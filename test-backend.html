@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backend Test - SkillHood</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 50px auto; padding: 20px; background: #f5f5f5; }
+        .test-section { background: white; padding: 20px; margin: 20px 0; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        button { background: #4A90E2; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin: 5px; }
+        button:hover { background: #357ABD; }
+        pre { background: #f8f8f8; padding: 15px; border-radius: 5px; overflow-x: auto; }
+        .success { color: #28a745; }
+        .error { color: #dc3545; }
+    </style>
+</head>
+<body>
+    <h1>SkillHood Backend Test</h1>
+
+    <div class="test-section">
+        <h2>1. Health Check</h2>
+        <button onclick="testHealth()">Test Health Endpoint</button>
+        <pre id="health-result">Click button to test...</pre>
+    </div>
+
+    <div class="test-section">
+        <h2>2. Login Test</h2>
+        <button onclick="testLogin()">Login as Alex</button>
+        <button onclick="testLogin('sarah@example.com')">Login as Sarah</button>
+        <button onclick="testLogin('admin@skillhood.com', 'admin123')">Login as Admin</button>
+        <pre id="login-result">Click button to test...</pre>
+    </div>
+
+    <div class="test-section">
+        <h2>3. Get Profile</h2>
+        <button onclick="testProfile()">Get My Profile</button>
+        <pre id="profile-result">Login first, then click...</pre>
+    </div>
+
+    <div class="test-section">
+        <h2>4. Get Skills</h2>
+        <button onclick="testSkills()">Get My Skills</button>
+        <pre id="skills-result">Login first, then click...</pre>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:5000/api';
+        let token = null;
+
+        async function testHealth() {
+            const result = document.getElementById('health-result');
+            try {
+                const response = await fetch(`${API_URL}/health`);
+                const data = await response.json();
+                result.innerHTML = `<span class="success">✓ Backend is running!</span>\n${JSON.stringify(data, null, 2)}`;
+            } catch (error) {
+                result.innerHTML = `<span class="error">✗ Error: ${error.message}</span>\nMake sure backend is running on port 5000`;
+            }
+        }
+
+        async function testLogin(email = 'alex@example.com', password = 'password123') {
+            const result = document.getElementById('login-result');
+            try {
+                const response = await fetch(`${API_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    token = data.token;
+                    result.innerHTML = `<span class="success">✓ Login successful!</span>\nToken: ${token.substring(0, 20)}...\n\nUser: ${data.user.name}\nEmail: ${data.user.email}`;
+                } else {
+                    result.innerHTML = `<span class="error">✗ Login failed</span>\n${JSON.stringify(data, null, 2)}`;
+                }
+            } catch (error) {
+                result.innerHTML = `<span class="error">✗ Error: ${error.message}</span>`;
+            }
+        }
+
+        async function testProfile() {
+            const result = document.getElementById('profile-result');
+            if (!token) {
+                result.innerHTML = '<span class="error">✗ Please login first</span>';
+                return;
+            }
+            try {
+                const response = await fetch(`${API_URL}/users/profile`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await response.json();
+                result.innerHTML = `<span class="success">✓ Profile loaded!</span>\n${JSON.stringify(data, null, 2)}`;
+            } catch (error) {
+                result.innerHTML = `<span class="error">✗ Error: ${error.message}</span>`;
+            }
+        }
+
+        async function testSkills() {
+            const result = document.getElementById('skills-result');
+            if (!token) {
+                result.innerHTML = '<span class="error">✗ Please login first</span>';
+                return;
+            }
+            try {
+                const response = await fetch(`${API_URL}/skills`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await response.json();
+                result.innerHTML = `<span class="success">✓ Skills loaded!</span>\n${JSON.stringify(data, null, 2)}`;
+            } catch (error) {
+                result.innerHTML = `<span class="error">✗ Error: ${error.message}</span>`;
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backend Data Viewer - SkillHood</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .data-section { margin: 2rem 0; }
+        .data-card { background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px; margin: 1rem 0; }
+        pre { background: #1a1a1a; padding: 1rem; border-radius: 8px; overflow-x: auto; font-size: 0.9rem; }
+        .btn-group { display: flex; gap: 1rem; margin: 1rem 0; }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">SkillHood - Data Viewer</div>
+        </div>
+    </nav>
+
+    <div class="dashboard">
+        <div class="container">
+            <h1 class="welcome-title">Backend Data Viewer 🔍</h1>
+            <p class="welcome-subtitle">View all data from MongoDB database</p>
+
+            <div class="btn-group">
+                <button class="btn-primary" onclick="loadUsers()">Load Users</button>
+                <button class="btn-primary" onclick="loadSkills()">Load Skills</button>
+                <button class="btn-primary" onclick="loadRequests()">Load Requests</button>
+                <button class="btn-primary" onclick="loadMessages()">Load Messages</button>
+                <button class="btn-secondary" onclick="clearAll()">Clear</button>
+            </div>
+
+            <div class="data-section">
+                <div class="glass-card">
+                    <h2>Users</h2>
+                    <div id="users-data">Click "Load Users" to view</div>
+                </div>
+
+                <div class="glass-card">
+                    <h2>Skills</h2>
+                    <div id="skills-data">Click "Load Skills" to view</div>
+                </div>
+
+                <div class="glass-card">
+                    <h2>Swap Requests</h2>
+                    <div id="requests-data">Click "Load Requests" to view</div>
+                </div>
+
+                <div class="glass-card">
+                    <h2>Messages</h2>
+                    <div id="messages-data">Click "Load Messages" to view</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script>
+        const API_URL = window.APP_CONFIG.API_URL;
+
+        async function loadUsers() {
+            try {
+                const response = await fetch(`${API_URL}/admin/users`, {
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+                });
+                const data = await response.json();
+                document.getElementById('users-data').innerHTML = `
+                    <p><strong>Total Users:</strong> ${data.data?.length || 0}</p>
+                    <pre>${JSON.stringify(data.data, null, 2)}</pre>
+                `;
+            } catch (error) {
+                document.getElementById('users-data').innerHTML = `<p style="color: #ef4444;">Error: ${error.message}</p>`;
+            }
+        }
+
+        async function loadSkills() {
+            try {
+                const response = await fetch(`${API_URL}/skills`, {
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+                });
+                const data = await response.json();
+                document.getElementById('skills-data').innerHTML = `
+                    <p><strong>Total Skills:</strong> ${data.data?.length || 0}</p>
+                    <pre>${JSON.stringify(data.data, null, 2)}</pre>
+                `;
+            } catch (error) {
+                document.getElementById('skills-data').innerHTML = `<p style="color: #ef4444;">Error: ${error.message}</p>`;
+            }
+        }
+
+        async function loadRequests() {
+            try {
+                const response = await fetch(`${API_URL}/requests`, {
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+                });
+                const data = await response.json();
+                document.getElementById('requests-data').innerHTML = `
+                    <p><strong>Total Requests:</strong> ${data.data?.length || 0}</p>
+                    <pre>${JSON.stringify(data.data, null, 2)}</pre>
+                `;
+            } catch (error) {
+                document.getElementById('requests-data').innerHTML = `<p style="color: #ef4444;">Error: ${error.message}</p>`;
+            }
+        }
+
+        async function loadMessages() {
+            try {
+                const response = await fetch(`${API_URL}/messages/all`, {
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+                });
+                const data = await response.json();
+                document.getElementById('messages-data').innerHTML = `
+                    <p><strong>Total Messages:</strong> ${data.data?.length || 0}</p>
+                    <pre>${JSON.stringify(data.data, null, 2)}</pre>
+                `;
+            } catch (error) {
+                document.getElementById('messages-data').innerHTML = `<p style="color: #ef4444;">Error: ${error.message}</p>`;
+            }
+        }
+
+        function clearAll() {
+            document.getElementById('users-data').innerHTML = 'Click "Load Users" to view';
+            document.getElementById('skills-data').innerHTML = 'Click "Load Skills" to view';
+            document.getElementById('requests-data').innerHTML = 'Click "Load Requests" to view';
+            document.getElementById('messages-data').innerHTML = 'Click "Load Messages" to view';
+        }
+    </script>
+</body>
+</html>

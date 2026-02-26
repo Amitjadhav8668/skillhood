@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - SkillHood</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="auth-page">
+    <div class="auth-container">
+        <div class="auth-card">
+            <h1 class="auth-title">Join SkillHood</h1>
+            <p class="auth-subtitle">Start exchanging skills with your community</p>
+            
+            <div id="success-message" class="alert alert-success" style="display: none;" role="alert"></div>
+            <div id="error-message" class="alert alert-error" style="display: none;" role="alert"></div>
+            
+            <form id="register-form">
+                <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">👤</span>
+                        <input type="text" name="name" class="form-input" placeholder="John Doe" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">📧</span>
+                        <input type="email" class="form-input" placeholder="your@email.com" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">🔒</span>
+                        <input type="password" id="password-input" class="form-input" placeholder="Min. 8 chars (A-z, 0-9)" required minlength="8">
+                    </div>
+                    <small style="color: var(--text-secondary); font-size: 0.8rem; margin-top: 0.25rem; display: block;">
+                        Must include: uppercase, lowercase, and number
+                    </small>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Location (City)</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">📍</span>
+                        <input type="text" name="city" class="form-input" placeholder="New York" required>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn-primary btn-full" id="register-btn">
+                    <span id="btn-text">Create Account</span>
+                    <span id="btn-loader" class="loading-spinner" style="display: none;"></span>
+                </button>
+                
+                <div style="text-align: center; margin: 1.5rem 0; color: var(--text-secondary); font-size: 0.9rem;">or</div>
+                
+                <button type="button" class="btn-secondary btn-full" onclick="signInWithGoogle()">
+                    <span style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                        <span>🔍</span> Sign up with Google
+                    </span>
+                </button>
+            </form>
+            
+            <div class="auth-links">
+                <a href="login.html">Already have an account? Sign in</a>
+            </div>
+        </div>
+    </div>
+    
+    <script src="config.js"></script>
+    <script src="api.js"></script>
+    <script src="ui-utils.js"></script>
+    <script src="auth-real.js"></script>
+</body>
+</html>

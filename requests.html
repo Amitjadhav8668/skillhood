@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Requests - SkillHood</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .request-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .request-tab {
+            padding: 0.75rem 1.5rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .request-tab.active {
+            background: linear-gradient(135deg, var(--cyan), var(--light-cyan));
+            border-color: transparent;
+        }
+        .request-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .request-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .request-user {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .request-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--cyan), var(--light-cyan));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        .status-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+        .status-pending {
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+            border: 1px solid rgba(255, 193, 7, 0.3);
+        }
+        .status-accepted {
+            background: rgba(40, 167, 69, 0.2);
+            color: #6dd89a;
+            border: 1px solid rgba(40, 167, 69, 0.3);
+        }
+        .status-rejected {
+            background: rgba(220, 53, 69, 0.2);
+            color: #ff6b7a;
+            border: 1px solid rgba(220, 53, 69, 0.3);
+        }
+        .request-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .btn-accept {
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, #28a745, #20c997);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-reject {
+            padding: 0.75rem 1.5rem;
+            background: rgba(220, 53, 69, 0.2);
+            border: 1px solid rgba(220, 53, 69, 0.3);
+            border-radius: 8px;
+            color: #ff6b7a;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-message {
+            padding: 0.75rem 1.5rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">SkillHood</div>
+            <ul class="nav-links">
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="skills.html">Skills</a></li>
+                <li><a href="map.html">Map</a></li>
+                <li><a href="messages.html">Messages</a></li>
+                <li><a href="profile.html">Profile</a></li>
+                <li><a href="#" onclick="logout()">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="dashboard">
+        <div class="container">
+            <div class="dashboard-header">
+                <h1 class="welcome-title">Skill Exchange Requests</h1>
+                <p class="welcome-subtitle">Manage your incoming and outgoing skill swap requests</p>
+            </div>
+
+            <div class="request-tabs">
+                <button class="request-tab active" onclick="switchRequestTab('received')">Received (3)</button>
+                <button class="request-tab" onclick="switchRequestTab('sent')">Sent (2)</button>
+            </div>
+
+            <div id="received-requests">
+                <div class="request-card">
+                    <div class="request-header">
+                        <div class="request-user">
+                            <div class="request-avatar">👨</div>
+                            <div>
+                                <h3 style="margin-bottom: 0.25rem;">Alex Johnson</h3>
+                                <p style="color: var(--text-secondary); font-size: 0.9rem;">Wants to learn: Web Development</p>
+                            </div>
+                        </div>
+                        <span class="status-badge status-pending">⏳ Pending</span>
+                    </div>
+                    <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+                        "Hi! I'm interested in learning web development from you. In exchange, I can teach you graphic design and illustration. Let me know if you're interested!"
+                    </p>
+                    <div style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1rem;">
+                        📅 Requested 2 hours ago
+                    </div>
+                    <div class="request-actions">
+                        <button class="btn-accept" onclick="acceptRequest(this)">✓ Accept</button>
+                        <button class="btn-reject" onclick="rejectRequest(this)">✗ Decline</button>
+                        <button class="btn-message">💬 Message</button>
+                    </div>
+                </div>
+
+                <div class="request-card">
+                    <div class="request-header">
+                        <div class="request-user">
+                            <div class="request-avatar">👩</div>
+                            <div>
+                                <h3 style="margin-bottom: 0.25rem;">Sarah Miller</h3>
+                                <p style="color: var(--text-secondary); font-size: 0.9rem;">Wants to learn: Photography</p>
+                            </div>
+                        </div>
+                        <span class="status-badge status-accepted">✓ Accepted</span>
+                    </div>
+                    <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+                        "I'd love to learn photography from you! I can help you with content writing and SEO in return."
+                    </p>
+                    <div style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1rem;">
+                        📅 Accepted 1 day ago
+                    </div>
+                    <div class="request-actions">
+                        <button class="btn-message" onclick="window.location.href='messages.html'">💬 Start Chat</button>
+                    </div>
+                </div>
+
+                <div class="request-card">
+                    <div class="request-header">
+                        <div class="request-user">
+                            <div class="request-avatar">👨</div>
+                            <div>
+                                <h3 style="margin-bottom: 0.25rem;">David Lee</h3>
+                                <p style="color: var(--text-secondary); font-size: 0.9rem;">Wants to learn: UI/UX Design</p>
+                            </div>
+                        </div>
+                        <span class="status-badge status-pending">⏳ Pending</span>
+                    </div>
+                    <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+                        "Looking to improve my design skills. I can teach you video editing in exchange!"
+                    </p>
+                    <div style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1rem;">
+                        📅 Requested 3 days ago
+                    </div>
+                    <div class="request-actions">
+                        <button class="btn-accept" onclick="acceptRequest(this)">✓ Accept</button>
+                        <button class="btn-reject" onclick="rejectRequest(this)">✗ Decline</button>
+                        <button class="btn-message">💬 Message</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="sent-requests" style="display: none;">
+                <div class="request-card">
+                    <div class="request-header">
+                        <div class="request-user">
+                            <div class="request-avatar">👨</div>
+                            <div>
+                                <h3 style="margin-bottom: 0.25rem;">Mike Chen</h3>
+                                <p style="color: var(--text-secondary); font-size: 0.9rem;">You want to learn: Guitar</p>
+                            </div>
+                        </div>
+                        <span class="status-badge status-pending">⏳ Pending</span>
+                    </div>
+                    <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+                        Your message: "Hi Mike! I'd love to learn guitar from you. I can teach you web development in return."
+                    </p>
+                    <div style="color: var(--text-secondary); font-size: 0.85rem;">
+                        📅 Sent 1 day ago
+                    </div>
+                </div>
+
+                <div class="request-card">
+                    <div class="request-header">
+                        <div class="request-user">
+                            <div class="request-avatar">👩</div>
+                            <div>
+                                <h3 style="margin-bottom: 0.25rem;">Emma Wilson</h3>
+                                <p style="color: var(--text-secondary); font-size: 0.9rem;">You want to learn: Spanish</p>
+                            </div>
+                        </div>
+                        <span class="status-badge status-rejected">✗ Declined</span>
+                    </div>
+                    <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+                        Your message: "Interested in learning Spanish. Can teach photography!"
+                    </p>
+                    <div style="color: var(--text-secondary); font-size: 0.85rem;">
+                        📅 Declined 2 days ago
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="api.js"></script>
+    <script src="ui-utils.js"></script>
+    <script src="auth-real.js"></script>
+    <script src="requests.js"></script>
+    <script>
+        // Request handling moved to requests.js
+    </script>
+</body>
+</html>

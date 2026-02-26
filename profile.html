@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - SkillHood</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">SkillHood</div>
+            <ul class="nav-links">
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="skills.html">Skills</a></li>
+                <li><a href="map.html">Map</a></li>
+                <li><a href="messages.html">Messages</a></li>
+                <li><a href="profile.html">Profile</a></li>
+                <li><a href="#" onclick="logout()">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="profile-section">
+        <div class="container" style="max-width: 1200px;">
+            <div class="glass-card" style="overflow: hidden; margin-bottom: 2rem;">
+                <div style="height: 8rem; background: linear-gradient(to right, #4A90E2, #357ABD);"></div>
+                <div style="padding: 0 2rem 2rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: -4rem;">
+                        <div style="display: flex; align-items: flex-end; gap: 1.5rem;">
+                            <div style="width: 8rem; height: 8rem; background: rgba(255,255,255,0.95); border-radius: 1rem; border: 4px solid white; box-shadow: 0 8px 32px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: bold; color: #333;">
+                                AD
+                            </div>
+                            <div style="padding-bottom: 0.5rem;">
+                                <h1 style="font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem;" id="profile-name">Alex Davis</h1>
+                                <div style="display: flex; gap: 1rem; color: var(--text-secondary); font-size: 0.9rem;">
+                                    <span id="profile-location">📍 San Francisco, CA</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn-primary" style="margin-bottom: 0.5rem;" onclick="openEditModal()">✏️ Edit Profile</button>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1.5rem;">
+                        <div style="display: flex; align-items: center; gap: 0.75rem; color: var(--text-secondary);">
+                            <span>📧</span>
+                            <span style="font-size: 0.9rem;" id="profile-email">alex.davis@example.com</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.75rem; color: var(--text-secondary);">
+                            <span>📅</span>
+                            <span style="font-size: 0.9rem;" id="profile-joined">Joined December 2025</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.75rem; color: var(--text-secondary);">
+                            <span>⏰</span>
+                            <span style="font-size: 0.9rem;" id="profile-availability">Available Weekends</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem;">
+                <div style="display: flex; flex-direction: column; gap: 2rem;">
+                    <div class="glass-card">
+                        <h2 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem;">About Me</h2>
+                        <p style="color: var(--text-secondary); line-height: 1.8;" id="profile-bio">
+                            I'm a full-stack developer with 5 years of experience in web development. 
+                            Passionate about teaching and learning new skills. I love connecting with people 
+                            and sharing knowledge. Currently looking to improve my Spanish and learn guitar 
+                            while helping others with programming and design.
+                        </p>
+                    </div>
+
+                    <div class="glass-card">
+                        <h2 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 1.5rem;">Skills</h2>
+                        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                            <div>
+                                <h3 style="font-size: 0.9rem; font-weight: 500; margin-bottom: 0.75rem; display: flex; align-items: center;">
+                                    <div style="width: 0.5rem; height: 0.5rem; background: #4A90E2; border-radius: 50%; margin-right: 0.5rem;"></div>
+                                    Skills I Offer
+                                </h3>
+                                <div style="display: flex; flex-wrap: gap: 0.5rem;">
+                                    <div style="background: rgba(74,144,226,0.15); color: #4A90E2; padding: 0.5rem 1rem; border-radius: 0.5rem; border: 1px solid rgba(74,144,226,0.3);">
+                                        <span style="font-weight: 500;">Web Development</span>
+                                        <span style="margin-left: 0.5rem; font-size: 0.75rem;">• Expert</span>
+                                    </div>
+                                    <div style="background: rgba(74,144,226,0.15); color: #4A90E2; padding: 0.5rem 1rem; border-radius: 0.5rem; border: 1px solid rgba(74,144,226,0.3);">
+                                        <span style="font-weight: 500;">JavaScript</span>
+                                        <span style="margin-left: 0.5rem; font-size: 0.75rem;">• Expert</span>
+                                    </div>
+                                    <div style="background: rgba(74,144,226,0.15); color: #4A90E2; padding: 0.5rem 1rem; border-radius: 0.5rem; border: 1px solid rgba(74,144,226,0.3);">
+                                        <span style="font-weight: 500;">React</span>
+                                        <span style="margin-left: 0.5rem; font-size: 0.75rem;">• Advanced</span>
+                                    </div>
+                                    <div style="background: rgba(74,144,226,0.15); color: #4A90E2; padding: 0.5rem 1rem; border-radius: 0.5rem; border: 1px solid rgba(74,144,226,0.3);">
+                                        <span style="font-weight: 500;">UI/UX Design</span>
+                                        <span style="margin-left: 0.5rem; font-size: 0.75rem;">• Intermediate</span>
+                                    </div>
+                                    <div style="background: rgba(74,144,226,0.15); color: #4A90E2; padding: 0.5rem 1rem; border-radius: 0.5rem; border: 1px solid rgba(74,144,226,0.3);">
+                                        <span style="font-weight: 500;">Photography</span>
+                                        <span style="margin-left: 0.5rem; font-size: 0.75rem;">• Intermediate</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 style="font-size: 0.9rem; font-weight: 500; margin-bottom: 0.75rem; display: flex; align-items: center;">
+                                    <div style="width: 0.5rem; height: 0.5rem; background: #357ABD; border-radius: 50%; margin-right: 0.5rem;"></div>
+                                    Skills I Want to Learn
+                                </h3>
+                                <div style="display: flex; flex-wrap: gap: 0.5rem;">
+                                    <div style="background: rgba(53,122,189,0.15); color: #357ABD; padding: 0.5rem 1rem; border-radius: 0.5rem; border: 1px solid rgba(53,122,189,0.3); font-weight: 500;">Spanish Language</div>
+                                    <div style="background: rgba(53,122,189,0.15); color: #357ABD; padding: 0.5rem 1rem; border-radius: 0.5rem; border: 1px solid rgba(53,122,189,0.3); font-weight: 500;">Guitar</div>
+                                    <div style="background: rgba(53,122,189,0.15); color: #357ABD; padding: 0.5rem 1rem; border-radius: 0.5rem; border: 1px solid rgba(53,122,189,0.3); font-weight: 500;">Graphic Design</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card">
+                        <h2 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 1.5rem;">Reviews & Feedback</h2>
+                        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                            <div style="padding-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
+                                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                        <div style="width: 2.5rem; height: 2.5rem; background: linear-gradient(135deg, #4A90E2, #357ABD); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 0.9rem;">SC</div>
+                                        <div>
+                                            <h4 style="font-weight: 500; margin-bottom: 0.125rem;">Sarah Chen</h4>
+                                            <p style="font-size: 0.75rem; color: var(--text-tertiary);">Jan 15, 2026</p>
+                                        </div>
+                                    </div>
+                                    <div style="color: #ffd700;">⭐⭐⭐⭐⭐</div>
+                                </div>
+                                <span style="display: inline-block; font-size: 0.75rem; font-weight: 500; background: rgba(74,144,226,0.15); color: #4A90E2; padding: 0.25rem 0.5rem; border-radius: 0.25rem; margin-bottom: 0.5rem;">React Development</span>
+                                <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6;">Excellent teacher! Very patient and knowledgeable about React.</p>
+                            </div>
+                            <div style="padding-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
+                                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                        <div style="width: 2.5rem; height: 2.5rem; background: linear-gradient(135deg, #4A90E2, #357ABD); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 0.9rem;">MJ</div>
+                                        <div>
+                                            <h4 style="font-weight: 500; margin-bottom: 0.125rem;">Mike Johnson</h4>
+                                            <p style="font-size: 0.75rem; color: var(--text-tertiary);">Jan 10, 2026</p>
+                                        </div>
+                                    </div>
+                                    <div style="color: #ffd700;">⭐⭐⭐⭐⭐</div>
+                                </div>
+                                <span style="display: inline-block; font-size: 0.75rem; font-weight: 500; background: rgba(74,144,226,0.15); color: #4A90E2; padding: 0.25rem 0.5rem; border-radius: 0.25rem; margin-bottom: 0.5rem;">UI/UX Design</span>
+                                <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6;">Great exchange! Learned a lot about UI/UX design principles.</p>
+                            </div>
+                            <div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
+                                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                        <div style="width: 2.5rem; height: 2.5rem; background: linear-gradient(135deg, #4A90E2, #357ABD); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 0.9rem;">EW</div>
+                                        <div>
+                                            <h4 style="font-weight: 500; margin-bottom: 0.125rem;">Emma Wilson</h4>
+                                            <p style="font-size: 0.75rem; color: var(--text-tertiary);">Jan 5, 2026</p>
+                                        </div>
+                                    </div>
+                                    <div style="color: #ffd700;">⭐⭐⭐⭐</div>
+                                </div>
+                                <span style="display: inline-block; font-size: 0.75rem; font-weight: 500; background: rgba(74,144,226,0.15); color: #4A90E2; padding: 0.25rem 0.5rem; border-radius: 0.25rem; margin-bottom: 0.5rem;">Web Development</span>
+                                <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6;">Very helpful and friendly. Would definitely exchange skills again!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    <div class="glass-card">
+                        <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem;">Statistics</h3>
+                        <div style="display: flex; flex-direction: column; gap: 1rem;">
+                            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                <div style="width: 2.5rem; height: 2.5rem; background: rgba(255,193,7,0.2); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; font-size: 1.25rem;">⭐</div>
+                                <div>
+                                    <p style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.125rem;">4.8</p>
+                                    <p style="font-size: 0.75rem; color: var(--text-secondary);">Average Rating</p>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                <div style="width: 2.5rem; height: 2.5rem; background: rgba(74,144,226,0.2); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; font-size: 1.25rem;">🏆</div>
+                                <div>
+                                    <p style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.125rem;">23</p>
+                                    <p style="font-size: 0.75rem; color: var(--text-secondary);">Skills Exchanged</p>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                <div style="width: 2.5rem; height: 2.5rem; background: rgba(156,39,176,0.2); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; font-size: 1.25rem;">📅</div>
+                                <div>
+                                    <p style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.125rem;">8</p>
+                                    <p style="font-size: 0.75rem; color: var(--text-secondary);">Sessions This Month</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, #4A90E2, #357ABD); border-radius: 1.25rem; padding: 1.5rem;">
+                        <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem;">Achievements</h3>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem;">
+                            <div style="background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); border-radius: 0.5rem; padding: 0.75rem; text-align: center;">
+                                <div style="font-size: 1.5rem; margin-bottom: 0.25rem;">🏆</div>
+                                <p style="font-size: 0.75rem; font-weight: 500;">Top Teacher</p>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); border-radius: 0.5rem; padding: 0.75rem; text-align: center;">
+                                <div style="font-size: 1.5rem; margin-bottom: 0.25rem;">⭐</div>
+                                <p style="font-size: 0.75rem; font-weight: 500;">5-Star Pro</p>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); border-radius: 0.5rem; padding: 0.75rem; text-align: center;">
+                                <div style="font-size: 1.5rem; margin-bottom: 0.25rem;">📅</div>
+                                <p style="font-size: 0.75rem; font-weight: 500;">Active User</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card">
+                        <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem;">Availability</h3>
+                        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                            <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                                <span style="font-size: 0.9rem; color: var(--text-secondary);">Monday - Friday</span>
+                                <span style="font-size: 0.9rem; font-weight: 500;">Evenings</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                                <span style="font-size: 0.9rem; color: var(--text-secondary);">Saturday</span>
+                                <span style="font-size: 0.9rem; font-weight: 500;">All Day</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; padding: 0.5rem 0;">
+                                <span style="font-size: 0.9rem; color: var(--text-secondary);">Sunday</span>
+                                <span style="font-size: 0.9rem; font-weight: 500;">Mornings</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="edit-modal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(10px); z-index: 2000; align-items: center; justify-content: center;">
+        <div class="modal-content" style="background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 24px; padding: 2.5rem; max-width: 500px; width: 90%;">
+            <h2 style="margin-bottom: 1.5rem;">Edit Profile</h2>
+            <form id="edit-profile-form">
+                <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" id="edit-name" class="form-input" style="padding-left: 1rem;" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Location</label>
+                    <input type="text" id="edit-location" class="form-input" style="padding-left: 1rem;" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" id="edit-email" class="form-input" style="padding-left: 1rem;" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Availability</label>
+                    <input type="text" id="edit-availability" class="form-input" style="padding-left: 1rem;" placeholder="e.g., Available Weekends">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Bio</label>
+                    <textarea id="edit-bio" class="form-input" style="min-height: 100px; padding: 1rem;" required></textarea>
+                </div>
+                <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                    <button type="submit" class="btn-primary" style="flex: 1;">Save Changes</button>
+                    <button type="button" class="btn-secondary" onclick="closeEditModal()" style="flex: 1;">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="api.js"></script>
+    <script src="ui-utils.js"></script>
+    <script src="auth-real.js"></script>
+    <script src="profile.js"></script>
+    <script>
+        function openEditModal() {
+            document.getElementById('edit-modal').style.display = 'flex';
+        }
+        
+        function closeEditModal() {
+            document.getElementById('edit-modal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

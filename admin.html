@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - SkillHood</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .admin-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--glass-border);
+        }
+        .admin-tab {
+            padding: 1rem 2rem;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+        }
+        .admin-tab.active {
+            color: var(--light-cyan);
+            border-bottom-color: var(--light-cyan);
+        }
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .admin-table th {
+            text-align: left;
+            padding: 1rem;
+            background: rgba(255,255,255,0.05);
+            border-bottom: 2px solid var(--glass-border);
+            font-weight: 600;
+        }
+        .admin-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .admin-table tr:hover {
+            background: rgba(255,255,255,0.03);
+        }
+        .action-btn-small {
+            padding: 0.5rem 1rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            font-size: 0.85rem;
+            margin-right: 0.5rem;
+            transition: all 0.3s;
+        }
+        .action-btn-small:hover {
+            background: rgba(255,255,255,0.12);
+        }
+        .action-btn-danger {
+            background: rgba(220, 53, 69, 0.2);
+            border-color: rgba(220, 53, 69, 0.3);
+            color: #ff6b7a;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        .admin-stat-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        .admin-stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--light-cyan);
+            margin-bottom: 0.5rem;
+        }
+        .admin-stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">SkillHood Admin</div>
+            <ul class="nav-links">
+                <li><a href="admin.html">Admin Panel</a></li>
+                <li><a href="dashboard.html">User View</a></li>
+                <li><a href="#" onclick="logout()">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="dashboard">
+        <div class="container">
+            <div class="dashboard-header">
+                <h1 class="welcome-title">Admin Dashboard</h1>
+                <p class="welcome-subtitle">Manage users, skills, and platform activity</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="admin-stat-card">
+                    <div class="admin-stat-value">1,247</div>
+                    <div class="admin-stat-label">Total Users</div>
+                </div>
+                <div class="admin-stat-card">
+                    <div class="admin-stat-value">3,892</div>
+                    <div class="admin-stat-label">Total Skills</div>
+                </div>
+                <div class="admin-stat-card">
+                    <div class="admin-stat-value">856</div>
+                    <div class="admin-stat-label">Active Exchanges</div>
+                </div>
+                <div class="admin-stat-card">
+                    <div class="admin-stat-value">12</div>
+                    <div class="admin-stat-label">Pending Reports</div>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <div class="admin-tabs">
+                    <button class="admin-tab active" onclick="switchAdminTab('users')">Users</button>
+                    <button class="admin-tab" onclick="switchAdminTab('skills')">Skills</button>
+                    <button class="admin-tab" onclick="switchAdminTab('reports')">Reports</button>
+                </div>
+
+                <div id="users-tab" class="tab-content active">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>User ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Location</th>
+                                <th>Joined</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#1001</td>
+                                <td>John Doe</td>
+                                <td>john@example.com</td>
+                                <td>New York, NY</td>
+                                <td>Jan 15, 2024</td>
+                                <td><span style="color: #6dd89a;">● Active</span></td>
+                                <td>
+                                    <button class="action-btn-small">View</button>
+                                    <button class="action-btn-small">Edit</button>
+                                    <button class="action-btn-small action-btn-danger">Suspend</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#1002</td>
+                                <td>Sarah Miller</td>
+                                <td>sarah@example.com</td>
+                                <td>Los Angeles, CA</td>
+                                <td>Jan 18, 2024</td>
+                                <td><span style="color: #6dd89a;">● Active</span></td>
+                                <td>
+                                    <button class="action-btn-small">View</button>
+                                    <button class="action-btn-small">Edit</button>
+                                    <button class="action-btn-small action-btn-danger">Suspend</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#1003</td>
+                                <td>Alex Johnson</td>
+                                <td>alex@example.com</td>
+                                <td>Chicago, IL</td>
+                                <td>Jan 20, 2024</td>
+                                <td><span style="color: #6dd89a;">● Active</span></td>
+                                <td>
+                                    <button class="action-btn-small">View</button>
+                                    <button class="action-btn-small">Edit</button>
+                                    <button class="action-btn-small action-btn-danger">Suspend</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#1004</td>
+                                <td>Mike Chen</td>
+                                <td>mike@example.com</td>
+                                <td>San Francisco, CA</td>
+                                <td>Jan 22, 2024</td>
+                                <td><span style="color: #ff6b7a;">● Suspended</span></td>
+                                <td>
+                                    <button class="action-btn-small">View</button>
+                                    <button class="action-btn-small">Edit</button>
+                                    <button class="action-btn-small" style="color: #6dd89a;">Activate</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#1005</td>
+                                <td>Emma Wilson</td>
+                                <td>emma@example.com</td>
+                                <td>Boston, MA</td>
+                                <td>Jan 25, 2024</td>
+                                <td><span style="color: #6dd89a;">● Active</span></td>
+                                <td>
+                                    <button class="action-btn-small">View</button>
+                                    <button class="action-btn-small">Edit</button>
+                                    <button class="action-btn-small action-btn-danger">Suspend</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="skills-tab" class="tab-content">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Skill ID</th>
+                                <th>Skill Name</th>
+                                <th>Category</th>
+                                <th>Users Offering</th>
+                                <th>Users Wanting</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#S001</td>
+                                <td>Web Development</td>
+                                <td>Technology</td>
+                                <td>234</td>
+                                <td>189</td>
+                                <td><span style="color: #6dd89a;">● Approved</span></td>
+                                <td>
+                                    <button class="action-btn-small">Edit</button>
+                                    <button class="action-btn-small action-btn-danger">Remove</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#S002</td>
+                                <td>Graphic Design</td>
+                                <td>Design</td>
+                                <td>156</td>
+                                <td>203</td>
+                                <td><span style="color: #6dd89a;">● Approved</span></td>
+                                <td>
+                                    <button class="action-btn-small">Edit</button>
+                                    <button class="action-btn-small action-btn-danger">Remove</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#S003</td>
+                                <td>Photography</td>
+                                <td>Arts</td>
+                                <td>178</td>
+                                <td>145</td>
+                                <td><span style="color: #6dd89a;">● Approved</span></td>
+                                <td>
+                                    <button class="action-btn-small">Edit</button>
+                                    <button class="action-btn-small action-btn-danger">Remove</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#S004</td>
+                                <td>Guitar</td>
+                                <td>Music</td>
+                                <td>92</td>
+                                <td>167</td>
+                                <td><span style="color: #6dd89a;">● Approved</span></td>
+                                <td>
+                                    <button class="action-btn-small">Edit</button>
+                                    <button class="action-btn-small action-btn-danger">Remove</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#S005</td>
+                                <td>Spanish Language</td>
+                                <td>Language</td>
+                                <td>134</td>
+                                <td>198</td>
+                                <td><span style="color: #6dd89a;">● Approved</span></td>
+                                <td>
+                                    <button class="action-btn-small">Edit</button>
+                                    <button class="action-btn-small action-btn-danger">Remove</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="reports-tab" class="tab-content">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Report ID</th>
+                                <th>Reporter</th>
+                                <th>Reported User</th>
+                                <th>Reason</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#R001</td>
+                                <td>User #1023</td>
+                                <td>User #1045</td>
+                                <td>Inappropriate behavior</td>
+                                <td>Feb 1, 2024</td>
+                                <td><span style="color: #ffc107;">● Pending</span></td>
+                                <td>
+                                    <button class="action-btn-small">Review</button>
+                                    <button class="action-btn-small" style="color: #6dd89a;">Resolve</button>
+                                    <button class="action-btn-small action-btn-danger">Take Action</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#R002</td>
+                                <td>User #1067</td>
+                                <td>User #1089</td>
+                                <td>Spam messages</td>
+                                <td>Feb 2, 2024</td>
+                                <td><span style="color: #ffc107;">● Pending</span></td>
+                                <td>
+                                    <button class="action-btn-small">Review</button>
+                                    <button class="action-btn-small" style="color: #6dd89a;">Resolve</button>
+                                    <button class="action-btn-small action-btn-danger">Take Action</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#R003</td>
+                                <td>User #1034</td>
+                                <td>User #1056</td>
+                                <td>No-show for scheduled session</td>
+                                <td>Feb 3, 2024</td>
+                                <td><span style="color: #6dd89a;">● Resolved</span></td>
+                                <td>
+                                    <button class="action-btn-small">View Details</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+    <script>
+        function switchAdminTab(tab) {
+            document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(tab + '-tab').classList.add('active');
+        }
+    </script>
+</body>
+</html>

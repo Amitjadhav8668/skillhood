@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map View - SkillHood</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        .map-container {
+            display: flex;
+            gap: 2rem;
+            height: calc(100vh - 120px);
+        }
+        .map-sidebar {
+            width: 350px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 1.5rem;
+            overflow-y: auto;
+        }
+        .map-view {
+            flex: 1;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        #map {
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+        }
+        .filter-group {
+            margin-bottom: 1.5rem;
+        }
+        .filter-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .filter-input {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            color: white;
+        }
+        .user-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .user-card:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateX(5px);
+        }
+        .user-card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.75rem;
+        }
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--cyan), var(--light-cyan));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        .match-score {
+            margin-left: auto;
+            background: rgba(77,184,209,0.2);
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            color: var(--light-cyan);
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+        .user-skills {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        @media (max-width: 968px) {
+            .map-container {
+                flex-direction: column;
+                height: auto;
+            }
+            .map-sidebar {
+                width: 100%;
+            }
+            .map-view {
+                height: 500px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">SkillHood</div>
+            <ul class="nav-links">
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="skills.html">Skills</a></li>
+                <li><a href="map.html">Map</a></li>
+                <li><a href="messages.html">Messages</a></li>
+                <li><a href="profile.html">Profile</a></li>
+                <li><a href="#" onclick="logout()">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="dashboard">
+        <div class="container" style="max-width: 100%;">
+            <div class="dashboard-header">
+                <h1 class="welcome-title">Discover Nearby Skills</h1>
+                <p class="welcome-subtitle">Find and connect with skill exchangers in your area</p>
+            </div>
+
+            <div class="map-container">
+                <div class="map-sidebar">
+                    <h3 style="margin-bottom: 1.5rem;">Filters</h3>
+                    
+                    <div class="filter-group">
+                        <label class="filter-label">Search Skills</label>
+                        <input type="text" class="filter-input" placeholder="e.g., Web Development">
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label class="filter-label">Distance (km)</label>
+                        <input type="range" class="filter-input" min="1" max="50" value="10" style="padding: 0;">
+                        <span style="color: var(--text-secondary); font-size: 0.9rem;">Within 10 km</span>
+                    </div>
+                    
+                    <hr style="border: none; border-top: 1px solid var(--glass-border); margin: 1.5rem 0;">
+                    
+                    <h3 style="margin-bottom: 1rem;">Nearby Users (12)</h3>
+                    
+                    <div class="user-card">
+                        <div class="user-card-header">
+                            <div class="user-avatar">👨</div>
+                            <div>
+                                <h4 style="margin-bottom: 0.25rem;">Alex Johnson</h4>
+                                <span style="color: var(--text-secondary); font-size: 0.85rem;">2.3 km away</span>
+                            </div>
+                            <span class="match-score">95%</span>
+                        </div>
+                        <div class="user-skills">
+                            <strong>Offers:</strong> Graphic Design, Illustration<br>
+                            <strong>Wants:</strong> Web Development
+                        </div>
+                    </div>
+                    
+                    <div class="user-card">
+                        <div class="user-card-header">
+                            <div class="user-avatar">👩</div>
+                            <div>
+                                <h4 style="margin-bottom: 0.25rem;">Sarah Miller</h4>
+                                <span style="color: var(--text-secondary); font-size: 0.85rem;">3.7 km away</span>
+                            </div>
+                            <span class="match-score">88%</span>
+                        </div>
+                        <div class="user-skills">
+                            <strong>Offers:</strong> Content Writing<br>
+                            <strong>Wants:</strong> Photography
+                        </div>
+                    </div>
+                    
+                    <div class="user-card">
+                        <div class="user-card-header">
+                            <div class="user-avatar">👨</div>
+                            <div>
+                                <h4 style="margin-bottom: 0.25rem;">Mike Chen</h4>
+                                <span style="color: var(--text-secondary); font-size: 0.85rem;">5.1 km away</span>
+                            </div>
+                            <span class="match-score">82%</span>
+                        </div>
+                        <div class="user-skills">
+                            <strong>Offers:</strong> Python, Data Science<br>
+                            <strong>Wants:</strong> Guitar
+                        </div>
+                    </div>
+                </div>
+
+                <div class="map-view">
+                    <div id="map"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="config.js"></script>
+    <script src="api.js"></script>
+    <script src="ui-utils.js"></script>
+    <script src="auth-real.js"></script>
+    <script src="map.js"></script>
+    <script>
+        // Map initialization handled by map.js
+    </script>
+</body>
+</html>

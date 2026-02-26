@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Profile - SkillHood</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="auth-page">
+    <div class="auth-container" style="max-width: 600px;">
+        <div class="auth-card">
+            <h1 class="auth-title">Complete Your Profile</h1>
+            <p class="auth-subtitle">Tell us about your skills</p>
+            
+            <form id="profile-setup-form">
+                <div class="form-group">
+                    <label class="form-label">Bio</label>
+                    <textarea class="form-input" style="min-height: 100px; padding: 1rem;" placeholder="Tell us about yourself..." required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Skills I Offer</label>
+                    <div id="offer-skills" style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem;"></div>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <input type="text" id="offer-skill-input" class="form-input" placeholder="e.g., Web Development">
+                        <button type="button" class="btn-primary" onclick="addSkill('offer')" style="padding: 0.75rem 1.5rem; white-space: nowrap;">+ Add</button>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Skills I Want to Learn</label>
+                    <div id="want-skills" style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem;"></div>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <input type="text" id="want-skill-input" class="form-input" placeholder="e.g., Guitar">
+                        <button type="button" class="btn-primary" onclick="addSkill('want')" style="padding: 0.75rem 1.5rem; white-space: nowrap;">+ Add</button>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn-primary btn-full">Complete Profile</button>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        const offerSkills = [];
+        const wantSkills = [];
+        
+        function addSkill(type) {
+            const input = document.getElementById(type + '-skill-input');
+            const skill = input.value.trim();
+            
+            if (skill) {
+                if (type === 'offer') {
+                    offerSkills.push(skill);
+                    renderSkills('offer-skills', offerSkills, 'offer');
+                } else {
+                    wantSkills.push(skill);
+                    renderSkills('want-skills', wantSkills, 'want');
+                }
+                input.value = '';
+            }
+        }
+        
+        function renderSkills(containerId, skills, type) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = skills.map((skill, index) => `
+                <div style="background: rgba(74,144,226,0.15); color: #4A90E2; padding: 0.5rem 1rem; border-radius: 0.5rem; border: 1px solid rgba(74,144,226,0.3); display: flex; align-items: center; gap: 0.5rem;">
+                    ${skill}
+                    <span onclick="removeSkill('${type}', ${index})" style="cursor: pointer; font-weight: bold;">×</span>
+                </div>
+            `).join('');
+        }
+        
+        function removeSkill(type, index) {
+            if (type === 'offer') {
+                offerSkills.splice(index, 1);
+                renderSkills('offer-skills', offerSkills, 'offer');
+            } else {
+                wantSkills.splice(index, 1);
+                renderSkills('want-skills', wantSkills, 'want');
+            }
+        }
+        
+        document.getElementById('profile-setup-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (offerSkills.length > 0 && wantSkills.length > 0) {
+                localStorage.setItem('profileComplete', 'true');
+                window.location.href = 'dashboard.html';
+            } else {
+                alert('Please add at least one skill you offer and one skill you want to learn');
+            }
+        });
+    </script>
+</body>
+</html>

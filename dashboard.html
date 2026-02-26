@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - SkillHood</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">SkillHood</div>
+            <ul class="nav-links">
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="skills.html">Skills</a></li>
+                <li><a href="map.html">Map</a></li>
+                <li><a href="messages.html">Messages</a></li>
+                <li><a href="profile.html">Profile</a></li>
+                <li><a href="#" onclick="logout()">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="dashboard">
+        <div class="container" style="max-width: 1400px;">
+            <div class="dashboard-header">
+                <h1 class="welcome-title">Welcome back, <span id="user-name">Alex</span>! 👋</h1>
+                <p class="welcome-subtitle">Here's what's happening with your skill exchanges</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 2rem;">
+                <div class="glass-card" style="transition: all 0.3s;" onmouseover="this.style.boxShadow='0 12px 40px rgba(0,0,0,0.15)'" onmouseout="this.style.boxShadow=''">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                        <div style="width: 3rem; height: 3rem; background: rgba(74,144,226,0.2); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">📖</div>
+                        <span style="font-size: 0.75rem; font-weight: 600; background: rgba(74,144,226,0.2); color: #4A90E2; padding: 0.25rem 0.5rem; border-radius: 0.25rem;">Active</span>
+                    </div>
+                    <h3 id="skills-offered-count" style="font-size: 1.75rem; font-weight: 700; margin-bottom: 0.25rem;">0</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-secondary);">Skills Offered</p>
+                </div>
+                
+                <div class="glass-card" style="transition: all 0.3s;" onmouseover="this.style.boxShadow='0 12px 40px rgba(0,0,0,0.15)'" onmouseout="this.style.boxShadow=''">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                        <div style="width: 3rem; height: 3rem; background: rgba(53,122,189,0.2); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">🎯</div>
+                        <span style="font-size: 0.75rem; font-weight: 600; background: rgba(53,122,189,0.2); color: #357ABD; padding: 0.25rem 0.5rem; border-radius: 0.25rem;">Learning</span>
+                    </div>
+                    <h3 id="skills-wanted-count" style="font-size: 1.75rem; font-weight: 700; margin-bottom: 0.25rem;">0</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-secondary);">Skills Wanted</p>
+                </div>
+                
+                <div class="glass-card" style="transition: all 0.3s;" onmouseover="this.style.boxShadow='0 12px 40px rgba(0,0,0,0.15)'" onmouseout="this.style.boxShadow=''">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                        <div style="width: 3rem; height: 3rem; background: rgba(156,39,176,0.2); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">👥</div>
+                        <span style="font-size: 1rem; color: #4ade80;">↗️</span>
+                    </div>
+                    <h3 id="nearby-matches-count" style="font-size: 1.75rem; font-weight: 700; margin-bottom: 0.25rem;">0</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-secondary);">Nearby Matches</p>
+                </div>
+
+                <div class="glass-card" style="transition: all 0.3s;" onmouseover="this.style.boxShadow='0 12px 40px rgba(0,0,0,0.15)'" onmouseout="this.style.boxShadow=''">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                        <div style="width: 3rem; height: 3rem; background: rgba(255,152,0,0.2); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">💬</div>
+                        <span style="width: 0.5rem; height: 0.5rem; background: #ef4444; border-radius: 50%;"></span>
+                    </div>
+                    <h3 id="messages-count" style="font-size: 1.75rem; font-weight: 700; margin-bottom: 0.25rem;">0</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-secondary);">New Messages</p>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem;">
+                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    <div class="glass-card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                            <h2 style="font-size: 1.25rem; font-weight: 600;">Your Skills</h2>
+                            <a href="skills.html" style="font-size: 0.9rem; color: #4A90E2; text-decoration: none; font-weight: 500; display: flex; align-items: center; gap: 0.25rem;">
+                                Manage Skills →
+                            </a>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                            <div>
+                                <h3 style="font-size: 0.9rem; font-weight: 500; margin-bottom: 0.75rem; display: flex; align-items: center;">
+                                    <div style="width: 0.5rem; height: 0.5rem; background: #4A90E2; border-radius: 50%; margin-right: 0.5rem;"></div>
+                                    Skills I Offer
+                                </h3>
+                                <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                                    <div style="background: rgba(74,144,226,0.15); color: #4A90E2; padding: 0.5rem 0.75rem; border-radius: 0.5rem; font-size: 0.9rem; font-weight: 500;">Web Development</div>
+                                    <div style="background: rgba(74,144,226,0.15); color: #4A90E2; padding: 0.5rem 0.75rem; border-radius: 0.5rem; font-size: 0.9rem; font-weight: 500;">JavaScript</div>
+                                    <div style="background: rgba(74,144,226,0.15); color: #4A90E2; padding: 0.5rem 0.75rem; border-radius: 0.5rem; font-size: 0.9rem; font-weight: 500;">React</div>
+                                    <div style="background: rgba(74,144,226,0.15); color: #4A90E2; padding: 0.5rem 0.75rem; border-radius: 0.5rem; font-size: 0.9rem; font-weight: 500;">UI/UX Design</div>
+                                    <div style="background: rgba(74,144,226,0.15); color: #4A90E2; padding: 0.5rem 0.75rem; border-radius: 0.5rem; font-size: 0.9rem; font-weight: 500;">Photography</div>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 style="font-size: 0.9rem; font-weight: 500; margin-bottom: 0.75rem; display: flex; align-items: center;">
+                                    <div style="width: 0.5rem; height: 0.5rem; background: #357ABD; border-radius: 50%; margin-right: 0.5rem;"></div>
+                                    Skills I Want to Learn
+                                </h3>
+                                <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                                    <div style="background: rgba(53,122,189,0.15); color: #357ABD; padding: 0.5rem 0.75rem; border-radius: 0.5rem; font-size: 0.9rem; font-weight: 500;">Spanish Language</div>
+                                    <div style="background: rgba(53,122,189,0.15); color: #357ABD; padding: 0.5rem 0.75rem; border-radius: 0.5rem; font-size: 0.9rem; font-weight: 500;">Guitar</div>
+                                    <div style="background: rgba(53,122,189,0.15); color: #357ABD; padding: 0.5rem 0.75rem; border-radius: 0.5rem; font-size: 0.9rem; font-weight: 500;">Graphic Design</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                            <h2 style="font-size: 1.25rem; font-weight: 600;">Recent Requests</h2>
+                            <a href="requests.html" style="font-size: 0.9rem; color: #4A90E2; text-decoration: none; font-weight: 500; display: flex; align-items: center; gap: 0.25rem;">
+                                View All →
+                            </a>
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 1rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.3); border-radius: 0.75rem;">
+                                <div style="display: flex; align-items: center; gap: 1rem;">
+                                    <div style="width: 2.5rem; height: 2.5rem; background: #22c55e; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 0.9rem;">SC</div>
+                                    <div>
+                                        <h4 style="font-weight: 500; margin-bottom: 0.125rem;">Sarah Chen</h4>
+                                        <p style="font-size: 0.9rem; color: var(--text-secondary);">Wants to learn Web Development</p>
+                                    </div>
+                                </div>
+                                <span style="font-size: 0.75rem; font-weight: 600; background: rgba(34,197,94,0.2); color: #22c55e; padding: 0.25rem 0.75rem; border-radius: 9999px;">Accepted</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: rgba(234,179,8,0.1); border: 1px solid rgba(234,179,8,0.3); border-radius: 0.75rem;">
+                                <div style="display: flex; align-items: center; gap: 1rem;">
+                                    <div style="width: 2.5rem; height: 2.5rem; background: #eab308; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 0.9rem;">MJ</div>
+                                    <div>
+                                        <h4 style="font-weight: 500; margin-bottom: 0.125rem;">Mike Johnson</h4>
+                                        <p style="font-size: 0.9rem; color: var(--text-secondary);">Wants to exchange Graphic Design</p>
+                                    </div>
+                                </div>
+                                <span style="font-size: 0.75rem; font-weight: 600; background: rgba(234,179,8,0.2); color: #eab308; padding: 0.25rem 0.75rem; border-radius: 9999px;">Pending</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    <div class="glass-card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                            <h2 style="font-size: 1.25rem; font-weight: 600;">Nearby Matches</h2>
+                            <a href="map.html" style="color: #4A90E2; text-decoration: none;">📍</a>
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 1rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                    <div style="width: 2.5rem; height: 2.5rem; background: linear-gradient(135deg, #4A90E2, #357ABD); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 0.9rem;">SC</div>
+                                    <div>
+                                        <h4 style="font-weight: 500; font-size: 0.9rem; margin-bottom: 0.125rem;">Sarah Chen</h4>
+                                        <p style="font-size: 0.75rem; color: var(--text-secondary);">React Development</p>
+                                    </div>
+                                </div>
+                                <span style="font-size: 0.75rem; color: var(--text-tertiary); font-weight: 500;">2.3 km</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                    <div style="width: 2.5rem; height: 2.5rem; background: linear-gradient(135deg, #4A90E2, #357ABD); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 0.9rem;">MJ</div>
+                                    <div>
+                                        <h4 style="font-weight: 500; font-size: 0.9rem; margin-bottom: 0.125rem;">Mike Johnson</h4>
+                                        <p style="font-size: 0.75rem; color: var(--text-secondary);">Graphic Design</p>
+                                    </div>
+                                </div>
+                                <span style="font-size: 0.75rem; color: var(--text-tertiary); font-weight: 500;">3.1 km</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                    <div style="width: 2.5rem; height: 2.5rem; background: linear-gradient(135deg, #4A90E2, #357ABD); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 0.9rem;">EW</div>
+                                    <div>
+                                        <h4 style="font-weight: 500; font-size: 0.9rem; margin-bottom: 0.125rem;">Emma Wilson</h4>
+                                        <p style="font-size: 0.75rem; color: var(--text-secondary);">Spanish Language</p>
+                                    </div>
+                                </div>
+                                <span style="font-size: 0.75rem; color: var(--text-tertiary); font-weight: 500;">4.5 km</span>
+                            </div>
+                        </div>
+                        <a href="map.html" class="btn-primary" style="margin-top: 1.5rem; width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem; font-size: 0.9rem;">
+                            View Map →
+                        </a>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, #4A90E2, #357ABD); border-radius: 1.25rem; padding: 1.5rem;">
+                        <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem;">Quick Actions</h3>
+                        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                            <a href="skills.html" style="display: block; background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); border-radius: 0.5rem; padding: 0.75rem; text-decoration: none; color: white; transition: all 0.3s;" onmouseover="this.style.background='rgba(255,255,255,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'">
+                                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                    <span style="font-size: 1.25rem;">📖</span>
+                                    <span style="font-weight: 500;">Add New Skills</span>
+                                </div>
+                            </a>
+                            <a href="messages.html" style="display: block; background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); border-radius: 0.5rem; padding: 0.75rem; text-decoration: none; color: white; transition: all 0.3s;" onmouseover="this.style.background='rgba(255,255,255,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'">
+                                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                    <span style="font-size: 1.25rem;">💬</span>
+                                    <span style="font-weight: 500;">Send Message</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="api.js"></script>
+    <script src="ui-utils.js"></script>
+    <script src="auth-real.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+</html>

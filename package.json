@@ -1,0 +1,12 @@
+{
+  "name": "skillhood",
+  "version": "1.0.0",
+  "description": "Location-Based Skill Exchange Platform",
+  "scripts": {
+    "start": "npx http-server -p 3000 -o",
+    "dev": "npx live-server --port=3000 --open=index.html"
+  },
+  "keywords": ["skill-exchange", "community", "education"],
+  "author": "",
+  "license": "MIT"
+}
